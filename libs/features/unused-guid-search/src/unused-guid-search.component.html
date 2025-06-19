@@ -6,7 +6,7 @@
           {{ 'UNUSED_GUID_SEARCH.TABLE' | translate }}
         </label>
         <div class="col-sm-4">
-          <select class="form-control" formControlName="selectedDb" required>
+          <select data-testid="formControl" class="form-control" formControlName="selectedDb" required>
             @for (db of dbOptions; track db) {
               <option [ngValue]="db" [label]="db.label"></option>
             }
