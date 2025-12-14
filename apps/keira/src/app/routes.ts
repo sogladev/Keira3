@@ -62,6 +62,9 @@ import {
   FishingLootTemplateComponent,
   MailLootHandlerService,
   MailLootTemplateComponent,
+  FishingLootCopyComponent,
+  MailLootCopyComponent,
+  ReferenceLootCopyComponent,
   ReferenceLootHandlerService,
   ReferenceLootTemplateComponent,
   SelectFishingLootComponent,
@@ -96,11 +99,14 @@ import {
   NpcTextHandlerService,
   PageTextComponent,
   PageTextHandlerService,
+  PageTextCopyComponent,
+  NpcTextCopyComponent,
   SelectBroadcastTextComponent,
   SelectNpcTextComponent,
   SelectPageTextComponent,
   AcoreStringComponent,
   AcoreStringHandlerService,
+  AcoreStringCopyComponent,
   SelectAcoreStringComponent,
 } from 'texts';
 import { GameTeleComponent, GameTeleHandlerService, SelectGameTeleComponent, GameTeleCopyComponent } from '@keira/features/game-tele';
@@ -389,6 +395,11 @@ export const KEIRA_ROUTES: Routes = [
         canActivate: [ReferenceLootHandlerService],
       },
       {
+        path: 'reference-copy',
+        component: ReferenceLootCopyComponent,
+        canActivate: [ReferenceLootHandlerService],
+      },
+      {
         path: 'select-spell',
         component: SelectSpellLootComponent,
       },
@@ -407,12 +418,22 @@ export const KEIRA_ROUTES: Routes = [
         canActivate: [FishingLootHandlerService],
       },
       {
+        path: 'fishing-copy',
+        component: FishingLootCopyComponent,
+        canActivate: [FishingLootHandlerService],
+      },
+      {
         path: 'select-mail',
         component: SelectMailLootComponent,
       },
       {
         path: 'mail',
         component: MailLootTemplateComponent,
+        canActivate: [MailLootHandlerService],
+      },
+      {
+        path: 'mail-copy',
+        component: MailLootCopyComponent,
         canActivate: [MailLootHandlerService],
       },
     ],
@@ -423,6 +444,11 @@ export const KEIRA_ROUTES: Routes = [
       {
         path: 'select-page-text',
         component: SelectPageTextComponent,
+      },
+      {
+        path: 'page-text-copy',
+        component: PageTextCopyComponent,
+        canActivate: [PageTextHandlerService],
       },
       {
         path: 'page-text',
@@ -443,6 +469,11 @@ export const KEIRA_ROUTES: Routes = [
         component: SelectNpcTextComponent,
       },
       {
+        path: 'npc-text-copy',
+        component: NpcTextCopyComponent,
+        canActivate: [NpcTextHandlerService],
+      },
+      {
         path: 'npc-text',
         component: NpcTextComponent,
         canActivate: [NpcTextHandlerService],
@@ -450,6 +481,11 @@ export const KEIRA_ROUTES: Routes = [
       {
         path: 'acore-string',
         component: AcoreStringComponent,
+        canActivate: [AcoreStringHandlerService],
+      },
+      {
+        path: 'acore-string-copy',
+        component: AcoreStringCopyComponent,
         canActivate: [AcoreStringHandlerService],
       },
       {

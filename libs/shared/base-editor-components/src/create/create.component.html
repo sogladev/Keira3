@@ -1,39 +1,42 @@
 <p class="h5" [translate]="'CREATE.CREATE_NEW'"></p>
 
-<div class="row mb-3">
-  <div class="col-12">
-    <div class="form-check">
-      <input
-        class="form-check-input"
-        type="radio"
-        name="creationMethod"
-        id="method-blank"
-        value="blank"
-        [(ngModel)]="creationMethod"
-        (change)="onCreationMethodChange()"
-      />
-      <label class="form-check-label" for="method-blank">
-        {{ 'CREATE.START_FROM_BLANK' | translate }}
-      </label>
-    </div>
-    <div class="form-check">
-      <input
-        class="form-check-input"
-        type="radio"
-        name="creationMethod"
-        id="method-copy"
-        value="copy"
-        [(ngModel)]="creationMethod"
-        (change)="onCreationMethodChange()"
-        [disabled]="!allowCopy"
-        [title]="allowCopy ? '' : 'Copy from existing is not available for this entity'"
-      />
-      <label class="form-check-label" for="method-copy">
-        {{ 'CREATE.COPY_FROM_EXISTING' | translate }}
-      </label>
+@if (allowCopy) {
+  <div class="row mb-2">
+    <div class="col-12">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="creationMethod"
+          id="method-blank"
+          value="blank"
+          [(ngModel)]="creationMethod"
+          (change)="onCreationMethodChange()"
+        />
+        <label class="form-check-label" for="method-blank">
+          {{ 'CREATE.START_FROM_BLANK' | translate }}
+        </label>
+      </div>
+
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="creationMethod"
+          id="method-copy"
+          value="copy"
+          [(ngModel)]="creationMethod"
+          (change)="onCreationMethodChange()"
+          [disabled]="!allowCopy"
+          [title]="allowCopy ? '' : 'Copy from existing is not available for this entity'"
+        />
+        <label class="form-check-label" for="method-copy">
+          {{ 'CREATE.COPY_FROM_EXISTING' | translate }}
+        </label>
+      </div>
     </div>
   </div>
-</div>
+}
 
 <div class="row">
   <div class="col-12">
