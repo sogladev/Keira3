@@ -12,4 +12,5 @@ export * from './reference-loot/reference-loot-copy.component';
 export * from './spell-loot/spell-loot-template.component';
 export * from './spell-loot/select-spell-loot.component';
 export * from './spell-loot/spell-loot-handler.service';
+export * from './spell-loot/spell-loot-copy.component';
 export * from './fishing-loot/fishing-loot-copy.component';

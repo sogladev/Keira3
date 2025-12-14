@@ -63,6 +63,7 @@ import {
   MailLootHandlerService,
   MailLootTemplateComponent,
   FishingLootCopyComponent,
+  SpellLootCopyComponent,
   MailLootCopyComponent,
   ReferenceLootCopyComponent,
   ReferenceLootHandlerService,
@@ -398,6 +399,11 @@ export const KEIRA_ROUTES: Routes = [
         path: 'reference-copy',
         component: ReferenceLootCopyComponent,
         canActivate: [ReferenceLootHandlerService],
+      },
+      {
+        path: 'spell-copy',
+        component: SpellLootCopyComponent,
+        canActivate: [SpellLootHandlerService],
       },
       {
         path: 'select-spell',
