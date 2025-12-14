@@ -463,39 +463,16 @@ export class MysqlQueryService extends BaseQueryService {
     );
   }
 
-  // Generates SQL to copy an entry from one ID to another
+  // Generates SQL to copy an entry from one ID to another using temporary table
   getCopyQuery<T extends TableRow>(tableName: string, sourceId: string | number, newId: string | number, idField: string): string {
-    // Use a temporary table to copy and modify the ID
     const query =
       `-- Copy ${tableName} entry from ${sourceId} to ${newId}\n` +
       `DELETE FROM \`${tableName}\` WHERE \`${idField}\` = ${newId};\n` +
-      `CREATE TEMPORARY TABLE IF NOT EXISTS temp_copy_table AS SELECT * FROM \`${tableName}\` WHERE \`${idField}\` = ${sourceId};\n` +
+      `CREATE TEMPORARY TABLE temp_copy_table AS\n` +
+      `  SELECT * FROM \`${tableName}\` WHERE \`${idField}\` = ${sourceId};\n` +
       `UPDATE temp_copy_table SET \`${idField}\` = ${newId};\n` +
       `INSERT INTO \`${tableName}\` SELECT * FROM temp_copy_table;\n` +
-      `DROP TEMPORARY TABLE IF EXISTS temp_copy_table;\n`;
-
-    return this.formatQuery(query);
-  }
-
-  // Generates SQL to copy multiple related entries (for tables with composite keys)
-  getCopyQueryMultipleKeys<T extends TableRow>(
-    tableName: string,
-    sourceId: string | number,
-    newId: string | number,
-    primaryIdField: string,
-    secondaryIdField?: string,
-  ): string {
-    let query =
-      `-- Copy ${tableName} entries from ${sourceId} to ${newId}\n` +
-      `DELETE FROM \`${tableName}\` WHERE \`${primaryIdField}\` = ${newId};\n` +
-      `INSERT INTO \`${tableName}\`\n` +
-      `SELECT ${newId} AS \`${primaryIdField}\``;
-
-    if (secondaryIdField) {
-      query += `, \`${secondaryIdField}\``;
-    }
-
-    query += `, t.*\n` + `FROM (SELECT * FROM \`${tableName}\` WHERE \`${primaryIdField}\` = ${sourceId}) AS t;\n`;
+      `DROP TEMPORARY TABLE temp_copy_table;\n`;
 
     return this.formatQuery(query);
   }
