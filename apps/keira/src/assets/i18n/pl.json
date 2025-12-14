@@ -30,7 +30,7 @@
     "EXISTS": "exists",
     "DOES_NOT_EXIST": "does not exist",
     "START_FROM_BLANK": "Start from blank",
-    "COPY_FROM_EXISTING": "Copy from existing (experimental)"
+    "COPY_FROM_EXISTING": "Copy from existing"
   },
   "CONNECTED": "Connected",
   "SEARCH": "Search",
