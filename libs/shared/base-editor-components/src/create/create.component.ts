@@ -26,8 +26,11 @@ export class CreateComponent<T extends TableRow> extends SubscriptionHandler imp
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
 
   public idModel!: number;
+  public sourceIdModel?: number;
+  public creationMethod: 'blank' | 'copy' = 'blank';
   private _loading = false;
   isIdFree = false;
+  isSourceIdValid = false;
 
   get loading(): boolean {
     return this._loading;
@@ -79,9 +82,70 @@ export class CreateComponent<T extends TableRow> extends SubscriptionHandler imp
     if (this.idModel > MAX_INT_UNSIGNED_VALUE) {
       this.idModel = MAX_INT_UNSIGNED_VALUE;
     }
+    if (this.sourceIdModel && this.sourceIdModel > MAX_INT_UNSIGNED_VALUE) {
+      this.sourceIdModel = MAX_INT_UNSIGNED_VALUE;
+    }
   }
 
   private calculateNextId(currentMax: number): number {
     return currentMax < this.customStartingId ? this.customStartingId : currentMax + 1;
+  }
+
+  onCreationMethodChange(): void {
+    // Reset source validation when switching methods
+    if (this.creationMethod === 'blank') {
+      this.sourceIdModel = undefined;
+      this.isSourceIdValid = false;
+    }
+    this.changeDetectorRef.markForCheck();
+  }
+
+  checkSourceId(): void {
+    if (!this.sourceIdModel) {
+      this.isSourceIdValid = false;
+      this.changeDetectorRef.markForCheck();
+      return;
+    }
+
+    this._loading = true;
+    this.subscriptions.push(
+      this.queryService.selectAll<T>(this.entityTable, this.entityIdField, this.sourceIdModel).subscribe({
+        next: (data) => {
+          // Source ID should exist (opposite of new ID check)
+          this.isSourceIdValid = data.length > 0;
+          this._loading = false;
+          this.changeDetectorRef.markForCheck();
+        },
+        error: (error: QueryError) => {
+          console.error(error);
+          this.isSourceIdValid = false;
+          this._loading = false;
+          this.changeDetectorRef.markForCheck();
+        },
+      }),
+    );
+  }
+
+  isFormValid(): boolean {
+    // New entry ID must be valid (free and exists)
+    const isNewIdValid = !!this.idModel && this.isIdFree;
+
+    // If copying, source ID must also be valid (exists)
+    if (this.creationMethod === 'copy') {
+      return isNewIdValid && !!this.sourceIdModel && this.isSourceIdValid;
+    }
+
+    // If blank, only new ID needs to be valid
+    return isNewIdValid;
+  }
+
+  onCreate(): void {
+    if (this.creationMethod === 'copy') {
+      // TODO: Implement copy logic in next phase
+      // For now, just select with the new ID
+      this.handlerService.select(true, this.idModel, this.sourceIdModel!.toString());
+    } else {
+      this.handlerService.select(true, this.idModel);
+    }
   }
 }
