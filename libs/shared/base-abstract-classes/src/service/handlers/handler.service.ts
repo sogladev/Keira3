@@ -12,7 +12,7 @@ export abstract class HandlerService<T extends TableRow> extends SubscriptionHan
   selectedName!: string;
   isNew = false;
   forceReload = false;
-  sourceId?: string; // ID to copy from when creating new entity
+  sourceId?: string;
 
   protected abstract _statusMap: { [key: string]: WritableSignal<boolean> };
   protected abstract readonly mainEditorRoutePath: string;

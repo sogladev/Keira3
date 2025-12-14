@@ -56,7 +56,7 @@ export class CreateComponent<T extends TableRow> extends SubscriptionHandler imp
     if (this.queryService) {
       this.getNextId();
     }
-    // If copy isn't allowed, ensure the creation method is always blank
+
     if (!this.allowCopy) {
       this.creationMethod = 'blank';
     }
@@ -112,7 +112,6 @@ export class CreateComponent<T extends TableRow> extends SubscriptionHandler imp
   }
 
   onCreationMethodChange(): void {
-    // Reset source validation when switching methods
     if (this.creationMethod === 'blank') {
       this.sourceIdModel = undefined;
       this.isSourceIdValid = false;
@@ -147,21 +146,17 @@ export class CreateComponent<T extends TableRow> extends SubscriptionHandler imp
   }
 
   isFormValid(): boolean {
-    // New entry ID must be valid (free and exists)
     const isNewIdValid = !!this.idModel && this.isIdFree;
 
-    // If copying, source ID must also be valid (exists)
     if (this.creationMethod === 'copy') {
       return isNewIdValid && !!this.sourceIdModel && this.isSourceIdValid;
     }
 
-    // If blank, only new ID needs to be valid
     return isNewIdValid;
   }
 
   onCreate(): void {
     if (this.creationMethod === 'copy') {
-      // Pass sourceId to enable copy mode
       this.handlerService.select(true, this.idModel, undefined, true, this.sourceIdModel!.toString());
     } else {
       this.handlerService.select(true, this.idModel);
