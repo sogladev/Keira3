@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
-import { CREATURE_TEMPLATE_ID, CREATURE_TEMPLATE_TABLE } from '@keira/shared/acore-world-model';
+import { CREATURE_TEMPLATE_ID, CREATURE_TEMPLATE_TABLE, CreatureTemplate } from '@keira/shared/acore-world-model';
 import { CopyOutputComponent } from '@keira/shared/base-editor-components';
 import { CreatureHandlerService } from '../creature-handler.service';
 import { Router } from '@angular/router';
@@ -19,6 +19,13 @@ export class CreatureCopyComponent implements OnInit {
   protected readonly idField = CREATURE_TEMPLATE_ID;
   protected sourceId!: string | number;
   protected newId!: string | number;
+  protected readonly columns: string[];
+
+  constructor() {
+    // Extract column names from the entity class
+    const tempInstance = new CreatureTemplate();
+    this.columns = Object.getOwnPropertyNames(tempInstance);
+  }
 
   ngOnInit(): void {
     if (!this.handlerService.sourceId || !this.handlerService.selected) {
