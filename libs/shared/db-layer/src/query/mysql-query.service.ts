@@ -464,24 +464,15 @@ export class MysqlQueryService extends BaseQueryService {
   }
 
   // Generates SQL to copy an entry from one ID to another
-  getCopyQuery<T extends TableRow>(
-    tableName: string,
-    sourceId: string | number,
-    newId: string | number,
-    idField: string,
-    columns: string[],
-  ): string {
-    // Build the SELECT list: newId for the ID field, then all other columns
-    const otherColumns = columns.filter((col) => col !== idField);
-    const selectList = `${newId}, \`${otherColumns.join('\`, \`')}\``;
-
+  getCopyQuery<T extends TableRow>(tableName: string, sourceId: string | number, newId: string | number, idField: string): string {
+    // Use a temporary table to copy and modify the ID
     const query =
       `-- Copy ${tableName} entry from ${sourceId} to ${newId}\n` +
-      `DELETE FROM \`${tableName}\` WHERE \`${idField}\` = ${newId};\n\n` +
-      `INSERT INTO \`${tableName}\`\n` +
-      `SELECT ${selectList}\n` +
-      `FROM \`${tableName}\`\n` +
-      `WHERE \`${idField}\` = ${sourceId};\n`;
+      `DELETE FROM \`${tableName}\` WHERE \`${idField}\` = ${newId};\n` +
+      `CREATE TEMPORARY TABLE IF NOT EXISTS temp_copy_table AS SELECT * FROM \`${tableName}\` WHERE \`${idField}\` = ${sourceId};\n` +
+      `UPDATE temp_copy_table SET \`${idField}\` = ${newId};\n` +
+      `INSERT INTO \`${tableName}\` SELECT * FROM temp_copy_table;\n` +
+      `DROP TEMPORARY TABLE IF EXISTS temp_copy_table;\n`;
 
     return this.formatQuery(query);
   }

@@ -26,7 +26,6 @@ export class CopyOutputComponent<T extends TableRow> extends SubscriptionHandler
   @Input({ required: true }) idField!: string;
   @Input({ required: true }) sourceId!: string | number;
   @Input({ required: true }) newId!: string | number;
-  @Input({ required: true }) columns!: string[];
 
   protected copyQuery = signal<string>('');
   protected error = signal<QueryError | undefined>(undefined);
@@ -38,7 +37,7 @@ export class CopyOutputComponent<T extends TableRow> extends SubscriptionHandler
   }
 
   protected generateCopyQuery(): void {
-    const query = this.queryService.getCopyQuery(this.tableName, this.sourceId, this.newId, this.idField, this.columns);
+    const query = this.queryService.getCopyQuery(this.tableName, this.sourceId, this.newId, this.idField);
     this.copyQuery.set(query);
   }
 
