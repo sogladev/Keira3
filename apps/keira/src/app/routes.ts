@@ -86,7 +86,7 @@ import {
   QuestCopyComponent,
 } from '@keira/features/quest';
 import { SaiFullEditorComponent, SaiSearchEntityComponent, SaiSearchExistingComponent } from '@keira/features/smart-scripts';
-import { SelectSpellComponent, SpellDbcComponent } from '@keira/features/spell';
+import { SelectSpellComponent, SpellDbcComponent, SpellCopyComponent, SpellHandlerService } from '@keira/features/spell';
 import { SqlEditorComponent } from '@keira/features/sql-editor';
 import { SaiHandlerService } from '@keira/shared/sai-editor';
 import {
@@ -524,6 +524,11 @@ export const KEIRA_ROUTES: Routes = [
       {
         path: 'spell-dbc',
         component: SpellDbcComponent,
+      },
+      {
+        path: 'copy',
+        component: SpellCopyComponent,
+        canActivate: [SpellHandlerService],
       },
     ],
   },
