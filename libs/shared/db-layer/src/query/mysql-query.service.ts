@@ -463,14 +463,34 @@ export class MysqlQueryService extends BaseQueryService {
     );
   }
 
+  // Utility to format a value for SQL (quote strings, keep numbers unquoted)
+  private toSqlValue(value: string | number): string {
+    if (typeof value === 'number') return String(value);
+    // if string is an integer string, keep it without quotes
+    if (/^\d+$/.test(value)) return value as string;
+    // escape single quotes
+    return `'${(value as string).replace(/'/g, "\\'")}'`;
+  }
+
+  // Returns the SET statements to reuse the same src/dst IDs via MySQL session variables
+  getCopyVarsSet(sourceId: string | number, newId: string | number): string {
+    const source = this.toSqlValue(sourceId);
+    const entry = this.toSqlValue(newId);
+    return `SET @SOURCE = ${source};\nSET @ENTRY = ${entry};\n`;
+  }
+
   // Generates SQL to copy an entry from one ID to another using temporary table
-  getCopyQuery(tableName: string, sourceId: string | number, newId: string | number, idField: string): string {
+  // If useVars is true, the query uses @SOURCE and @ENTRY session variables instead of concrete values
+  getCopyQuery(tableName: string, sourceId: string | number, newId: string | number, idField: string, useVars: boolean = false): string {
+    const sourceRef = useVars ? '@SOURCE' : this.toSqlValue(sourceId);
+    const entryRef = useVars ? '@ENTRY' : this.toSqlValue(newId);
+
     const query =
-      `-- Copy ${tableName} entry from ${sourceId} to ${newId}\n` +
-      `DELETE FROM \`${tableName}\` WHERE \`${idField}\` = ${newId};\n` +
+      `-- Copy ${tableName} entry from ${sourceRef} to ${entryRef}\n` +
+      `DELETE FROM \`${tableName}\` WHERE \`${idField}\` = ${entryRef};\n` +
       `CREATE TEMPORARY TABLE temp_copy_table AS\n` +
-      `  SELECT * FROM \`${tableName}\` WHERE \`${idField}\` = ${sourceId};\n` +
-      `UPDATE temp_copy_table SET \`${idField}\` = ${newId};\n` +
+      `  SELECT * FROM \`${tableName}\` WHERE \`${idField}\` = ${sourceRef};\n` +
+      `UPDATE temp_copy_table SET \`${idField}\` = ${entryRef};\n` +
       `INSERT INTO \`${tableName}\` SELECT * FROM temp_copy_table;\n` +
       `DROP TEMPORARY TABLE temp_copy_table;\n`;
 

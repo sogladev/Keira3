@@ -71,12 +71,13 @@ export class CopyOutputComponent<T extends TableRow> extends SubscriptionHandler
   }
 
   protected generateCopyQuery(): void {
-    let query = this.queryService.getCopyQuery(this.tableName, this.sourceId, this.newId, this.idField);
+    const setVars = this.queryService.getCopyVarsSet(this.sourceId, this.newId);
+    let query = setVars + this.queryService.getCopyQuery(this.tableName, this.sourceId, this.newId, this.idField, true);
 
     const selectedRelatedTables = this.relatedTableStates().filter((t) => t.included);
     if (selectedRelatedTables.length > 0) {
       for (const table of selectedRelatedTables) {
-        query += '\n' + this.queryService.getCopyQuery(table.tableName, this.sourceId, this.newId, table.idField);
+        query += '\n' + this.queryService.getCopyQuery(table.tableName, this.sourceId, this.newId, table.idField, true);
       }
     }
 
