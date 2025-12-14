@@ -21,6 +21,22 @@ export class CreateComponent<T extends TableRow> extends SubscriptionHandler imp
   @Input({ required: true }) customStartingId!: number;
   @Input({ required: true }) handlerService!: HandlerService<T>;
   @Input({ required: true }) queryService!: MysqlQueryService;
+  // Controls whether "copy from existing" is allowed for the current entity table.
+  // Default is false (disabled). Individual selectors can enable it by passing [allowCopy]="true".
+  private _allowCopy = false;
+  @Input()
+  set allowCopy(value: boolean) {
+    this._allowCopy = !!value;
+    if (!this._allowCopy) {
+      // Reset creation method if copy is disabled
+      this.creationMethod = 'blank';
+      this.sourceIdModel = undefined;
+      this.isSourceIdValid = false;
+    }
+  }
+  get allowCopy(): boolean {
+    return this._allowCopy;
+  }
   @Input() maxEntryValue = MAX_INT_UNSIGNED_VALUE;
 
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
@@ -39,6 +55,10 @@ export class CreateComponent<T extends TableRow> extends SubscriptionHandler imp
   ngOnInit() {
     if (this.queryService) {
       this.getNextId();
+    }
+    // If copy isn't allowed, ensure the creation method is always blank
+    if (!this.allowCopy) {
+      this.creationMethod = 'blank';
     }
   }
 

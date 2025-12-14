@@ -472,7 +472,6 @@ export class MysqlQueryService extends BaseQueryService {
     return `'${(value as string).replace(/'/g, "\\'")}'`;
   }
 
-  // Returns the SET statements to reuse the same src/dst IDs via MySQL session variables
   getCopyVarsSet(sourceId: string | number, newId: string | number): string {
     const source = this.toSqlValue(sourceId);
     const entry = this.toSqlValue(newId);
@@ -497,7 +496,6 @@ export class MysqlQueryService extends BaseQueryService {
     return this.formatQuery(query);
   }
 
-  // Returns the number of rows that will be copied for the given table and id
   getRowsCount(tableName: string, idField: string, idValue: string | number) {
     return this.queryValue<number>(`SELECT COUNT(1) AS v FROM \`${tableName}\` WHERE \`${idField}\` = ${idValue};\n`);
   }

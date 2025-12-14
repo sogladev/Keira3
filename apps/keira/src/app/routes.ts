@@ -29,6 +29,7 @@ import {
 } from '@keira/features/creature';
 import {
   GameobjectHandlerService,
+  GameobjectCopyComponent,
   GameobjectLootTemplateComponent,
   GameobjectQuestitemComponent,
   GameobjectSpawnAddonComponent,
@@ -38,11 +39,18 @@ import {
   SaiGameobjectComponent,
   SelectGameobjectComponent,
 } from '@keira/features/gameobject';
-import { GossipHandlerService, GossipMenuComponent, GossipMenuOptionComponent, SelectGossipComponent } from '@keira/features/gossip';
+import {
+  GossipHandlerService,
+  GossipMenuComponent,
+  GossipMenuOptionComponent,
+  SelectGossipComponent,
+  GossipCopyComponent,
+} from '@keira/features/gossip';
 import {
   DisenchantLootTemplateComponent,
   ItemEnchantmentTemplateComponent,
   ItemHandlerService,
+  ItemCopyComponent,
   ItemLootTemplateComponent,
   ItemTemplateComponent,
   MillingLootTemplateComponent,
@@ -75,6 +83,7 @@ import {
   QuestTemplateLocaleComponent,
   QuestTemplateComponent,
   SelectQuestComponent,
+  QuestCopyComponent,
 } from '@keira/features/quest';
 import { SaiFullEditorComponent, SaiSearchEntityComponent, SaiSearchExistingComponent } from '@keira/features/smart-scripts';
 import { SelectSpellComponent, SpellDbcComponent } from '@keira/features/spell';
@@ -94,7 +103,7 @@ import {
   AcoreStringHandlerService,
   SelectAcoreStringComponent,
 } from 'texts';
-import { GameTeleComponent, GameTeleHandlerService, SelectGameTeleComponent } from '@keira/features/game-tele';
+import { GameTeleComponent, GameTeleHandlerService, SelectGameTeleComponent, GameTeleCopyComponent } from '@keira/features/game-tele';
 import { UnusedGuidSearchComponent } from '@keira/features/unused-guid-search';
 
 export const KEIRA_ROUTES: Routes = [
@@ -228,6 +237,11 @@ export const KEIRA_ROUTES: Routes = [
         canActivate: [QuestHandlerService],
       },
       {
+        path: 'copy',
+        component: QuestCopyComponent,
+        canActivate: [QuestHandlerService],
+      },
+      {
         path: 'quest-template-addon',
         component: QuestTemplateAddonComponent,
         canActivate: [QuestHandlerService],
@@ -282,6 +296,11 @@ export const KEIRA_ROUTES: Routes = [
         canActivate: [GameobjectHandlerService],
       },
       {
+        path: 'copy',
+        component: GameobjectCopyComponent,
+        canActivate: [GameobjectHandlerService],
+      },
+      {
         path: 'gameobject-template-addon',
         component: GameobjectTemplateAddonComponent,
         canActivate: [GameobjectHandlerService],
@@ -323,6 +342,11 @@ export const KEIRA_ROUTES: Routes = [
       {
         path: 'item-template',
         component: ItemTemplateComponent,
+        canActivate: [ItemHandlerService],
+      },
+      {
+        path: 'copy',
+        component: ItemCopyComponent,
         canActivate: [ItemHandlerService],
       },
       {
@@ -442,6 +466,11 @@ export const KEIRA_ROUTES: Routes = [
         component: SelectGossipComponent,
       },
       {
+        path: 'copy',
+        component: GossipCopyComponent,
+        canActivate: [GossipHandlerService],
+      },
+      {
         path: 'gossip-menu',
         component: GossipMenuComponent,
         canActivate: [GossipHandlerService],
@@ -504,6 +533,11 @@ export const KEIRA_ROUTES: Routes = [
       {
         path: 'select',
         component: SelectGameTeleComponent,
+      },
+      {
+        path: 'copy',
+        component: GameTeleCopyComponent,
+        canActivate: [GameTeleHandlerService],
       },
       {
         path: 'tele',
