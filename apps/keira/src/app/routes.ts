@@ -4,6 +4,7 @@ import { DashboardComponent } from '@keira/features/dashboard';
 
 import { ConditionsComponent, ConditionsHandlerService, SelectConditionsComponent } from '@keira/features/conditions';
 import {
+  CreatureCopyComponent,
   CreatureEquipTemplateComponent,
   CreatureFormationsComponent,
   CreatureHandlerService,
@@ -111,6 +112,11 @@ export const KEIRA_ROUTES: Routes = [
       {
         path: 'select',
         component: SelectCreatureComponent,
+      },
+      {
+        path: 'copy',
+        component: CreatureCopyComponent,
+        canActivate: [CreatureHandlerService],
       },
       {
         path: 'creature-template',

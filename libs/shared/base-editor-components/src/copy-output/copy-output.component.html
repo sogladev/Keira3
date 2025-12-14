@@ -1,0 +1,62 @@
+<div class="container-fluid">
+  <div class="content-block">
+    <div class="row">
+      <div class="col-12">
+        <h4>{{ 'COPY_OUTPUT.TITLE' | translate }}</h4>
+        <p>{{ 'COPY_OUTPUT.DESCRIPTION' | translate }}</p>
+      </div>
+    </div>
+
+    @if (error()) {
+      <keira-query-error [error]="error()!" />
+    }
+
+    <div class="row mb-3">
+      <div class="col-12">
+        <div class="sql-output-container">
+          <pre class="sql-output"><code>{{ copyQuery() }}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <button
+          class="btn btn-primary me-2"
+          (click)="copy()"
+          type="button"
+          [tooltip]="'COPY_OUTPUT.COPY_TOOLTIP' | translate"
+          placement="top"
+        >
+          <i class="fas fa-copy"></i> {{ 'COPY_OUTPUT.COPY' | translate }}
+        </button>
+
+        <button
+          class="btn btn-success me-2"
+          (click)="execute()"
+          type="button"
+          [disabled]="executing() || executed()"
+          [tooltip]="'COPY_OUTPUT.EXECUTE_TOOLTIP' | translate"
+          placement="top"
+        >
+          <i class="fas fa-play"></i>
+          @if (executing()) {
+            <i class="fas fa-spinner fa-spin"></i>
+          }
+          {{ executed() ? ('COPY_OUTPUT.EXECUTED' | translate) : ('COPY_OUTPUT.EXECUTE' | translate) }}
+        </button>
+
+        <button
+          class="btn btn-secondary"
+          (click)="continue()"
+          type="button"
+          [disabled]="!executed()"
+          [tooltip]="'COPY_OUTPUT.CONTINUE_TOOLTIP' | translate"
+          placement="top"
+        >
+          <i class="fas fa-arrow-right"></i> {{ 'COPY_OUTPUT.CONTINUE' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

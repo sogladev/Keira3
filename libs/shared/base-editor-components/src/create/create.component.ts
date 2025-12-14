@@ -141,9 +141,8 @@ export class CreateComponent<T extends TableRow> extends SubscriptionHandler imp
 
   onCreate(): void {
     if (this.creationMethod === 'copy') {
-      // TODO: Implement copy logic in next phase
-      // For now, just select with the new ID
-      this.handlerService.select(true, this.idModel, this.sourceIdModel!.toString());
+      // Pass sourceId to enable copy mode
+      this.handlerService.select(true, this.idModel, undefined, true, this.sourceIdModel!.toString());
     } else {
       this.handlerService.select(true, this.idModel);
     }
