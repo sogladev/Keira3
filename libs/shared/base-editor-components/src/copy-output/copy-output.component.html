@@ -14,7 +14,7 @@
     <div class="row mb-3">
       <div class="col-12">
         <div class="sql-output-container">
-          <pre class="sql-output"><code>{{ copyQuery() }}</code></pre>
+          <keira-highlightjs-wrapper [code]="copyQuery()" />
         </div>
       </div>
     </div>
@@ -22,24 +22,26 @@
     <div class="row">
       <div class="col-12">
         <button
-          class="btn btn-primary me-2"
+          id="copy-btn"
+          class="btn btn-secondary btn-sm me-2"
           (click)="copy()"
           type="button"
           [tooltip]="'COPY_OUTPUT.COPY_TOOLTIP' | translate"
           placement="top"
         >
-          <i class="fas fa-copy"></i> {{ 'COPY_OUTPUT.COPY' | translate }}
+          <i class="fa fa-copy fa-sm"></i> {{ 'COPY_OUTPUT.COPY' | translate }}
         </button>
 
         <button
-          class="btn btn-success me-2"
+          id="execute-btn"
+          class="btn btn-primary btn-sm me-2"
           (click)="execute()"
           type="button"
           [disabled]="executing() || executed()"
           [tooltip]="'COPY_OUTPUT.EXECUTE_TOOLTIP' | translate"
           placement="top"
         >
-          <i class="fas fa-play"></i>
+          <i class="fa fa-bolt fa-sm"></i>
           @if (executing()) {
             <i class="fas fa-spinner fa-spin"></i>
           }
@@ -47,14 +49,14 @@
         </button>
 
         <button
-          class="btn btn-secondary"
+          class="btn btn-success btn-sm"
           (click)="continue()"
           type="button"
           [disabled]="!executed()"
           [tooltip]="'COPY_OUTPUT.CONTINUE_TOOLTIP' | translate"
           placement="top"
         >
-          <i class="fas fa-arrow-right"></i> {{ 'COPY_OUTPUT.CONTINUE' | translate }}
+          <i class="fa fa-arrow-right fa-sm"></i> {{ 'COPY_OUTPUT.CONTINUE' | translate }}
         </button>
       </div>
     </div>

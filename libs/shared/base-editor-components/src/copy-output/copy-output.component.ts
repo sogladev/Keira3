@@ -9,13 +9,14 @@ import { MysqlQueryService } from '@keira/shared/db-layer';
 import { SubscriptionHandler } from '@keira/shared/utils';
 import { QueryError } from 'mysql2';
 import { QueryErrorComponent } from '../query-output/query-error/query-error.component';
+import { HighlightjsWrapperComponent } from '../highlightjs-wrapper/highlightjs-wrapper.component';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'keira-copy-output',
   templateUrl: './copy-output.component.html',
   styleUrls: ['./copy-output.component.scss'],
-  imports: [CommonModule, TranslateModule, TooltipModule, QueryErrorComponent],
+  imports: [CommonModule, TranslateModule, TooltipModule, QueryErrorComponent, HighlightjsWrapperComponent],
 })
 export class CopyOutputComponent<T extends TableRow> extends SubscriptionHandler implements OnInit {
   protected readonly clipboardService = inject(ClipboardService);
