@@ -11,16 +11,35 @@
       <keira-query-error [error]="error()!" />
     }
 
-    <div class="row mb-3">
-      <div class="col-12">
-        <div class="sql-output-container">
-          <keira-highlightjs-wrapper [code]="copyQuery()" />
+    @if (relatedTableStates().length > 0) {
+      <div class="row mb-3">
+        <div class="col-12">
+          <div class="mb-2 d-flex align-items-center">
+            <button class="btn btn-primary btn-sm me-2" type="button" (click)="selectAllRelated(true)">
+              <i class="fa fa-check fa-sm"></i> {{ 'COPY_OUTPUT.SELECT_ALL' | translate }}
+            </button>
+            <button class="btn btn-primary btn-sm me-2" type="button" (click)="selectAllRelated(false)">
+              <i class="fa fa-times fa-sm"></i> {{ 'COPY_OUTPUT.SELECT_NONE' | translate }}
+            </button>
+          </div>
+
+          <div class="related-tables-list mb-2">
+            @for (r of relatedTableStates(); track r.tableName) {
+              <label class="me-3">
+                <input type="checkbox" [checked]="r.included" (change)="toggleRelatedTable(r.tableName)" />
+                {{ r.tableName }} ({{ r.count }})
+              </label>
+            }
+          </div>
         </div>
       </div>
-    </div>
+    }
 
     <div class="row">
       <div class="col-12">
+        <div class="sql-output-container mb-3">
+          <keira-highlightjs-wrapper [code]="copyQuery()" />
+        </div>
         <button
           id="copy-btn"
           class="btn btn-secondary btn-sm me-2"

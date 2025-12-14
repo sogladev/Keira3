@@ -464,7 +464,7 @@ export class MysqlQueryService extends BaseQueryService {
   }
 
   // Generates SQL to copy an entry from one ID to another using temporary table
-  getCopyQuery<T extends TableRow>(tableName: string, sourceId: string | number, newId: string | number, idField: string): string {
+  getCopyQuery(tableName: string, sourceId: string | number, newId: string | number, idField: string): string {
     const query =
       `-- Copy ${tableName} entry from ${sourceId} to ${newId}\n` +
       `DELETE FROM \`${tableName}\` WHERE \`${idField}\` = ${newId};\n` +
@@ -475,5 +475,10 @@ export class MysqlQueryService extends BaseQueryService {
       `DROP TEMPORARY TABLE temp_copy_table;\n`;
 
     return this.formatQuery(query);
+  }
+
+  // Returns the number of rows that will be copied for the given table and id
+  getRowsCount(tableName: string, idField: string, idValue: string | number) {
+    return this.queryValue<number>(`SELECT COUNT(1) AS v FROM \`${tableName}\` WHERE \`${idField}\` = ${idValue};\n`);
   }
 }
