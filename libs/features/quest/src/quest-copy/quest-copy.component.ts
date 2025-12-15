@@ -45,10 +45,20 @@ export class QuestCopyComponent implements OnInit {
     { tableName: QUEST_TEMPLATE_LOCALE_TABLE, idField: QUEST_TEMPLATE_LOCALE_ID },
     { tableName: QUEST_OFFER_REWARD_TABLE, idField: QUEST_OFFER_REWARD_ID },
     { tableName: QUEST_REQUEST_ITEMS_TABLE, idField: QUEST_REQUEST_ITEMS_ID },
-    { tableName: CREATURE_QUESTSTARTER_TABLE, idField: CREATURE_QUESTSTARTER_ID },
-    { tableName: CREATURE_QUESTENDER_TABLE, idField: CREATURE_QUESTENDER_ID },
-    { tableName: GAMEOBJECT_QUESTSTARTER_TABLE, idField: GAMEOBJECT_QUESTSTARTER_ID },
-    { tableName: GAMEOBJECT_QUESTENDER_TABLE, idField: GAMEOBJECT_QUESTENDER_ID },
+    { tableName: CREATURE_QUESTSTARTER_TABLE, idField: CREATURE_QUESTSTARTER_ID, copyMode: 'RAW' as const, columns: ['id', 'quest'] },
+    { tableName: CREATURE_QUESTENDER_TABLE, idField: CREATURE_QUESTENDER_ID, copyMode: 'RAW' as const, columns: ['id', 'quest'] },
+    {
+      tableName: GAMEOBJECT_QUESTSTARTER_TABLE,
+      idField: GAMEOBJECT_QUESTSTARTER_ID,
+      copyMode: 'RAW' as const,
+      columns: ['id', 'quest'],
+    },
+    {
+      tableName: GAMEOBJECT_QUESTENDER_TABLE,
+      idField: GAMEOBJECT_QUESTENDER_ID,
+      copyMode: 'RAW' as const,
+      columns: ['id', 'quest'],
+    },
   ];
 
   ngOnInit(): void {
