@@ -485,7 +485,6 @@ export class MysqlQueryService extends BaseQueryService {
     const entryRef = useVars ? '@ENTRY' : this.toSqlValue(newId);
 
     const query =
-      `-- Copy ${tableName} entry from ${sourceRef} to ${entryRef}\n` +
       `DELETE FROM \`${tableName}\` WHERE \`${idField}\` = ${entryRef};\n` +
       `CREATE TEMPORARY TABLE temp_copy_table AS\n` +
       `  SELECT * FROM \`${tableName}\` WHERE \`${idField}\` = ${sourceRef};\n` +
@@ -533,7 +532,6 @@ export class MysqlQueryService extends BaseQueryService {
     const selectList = columns.map((col) => (col === idField ? `${entryRef} AS \`${col}\`` : `\`${col}\``)).join(', ');
 
     const query =
-      `-- Copy ${tableName} entry from ${sourceRef} to ${entryRef}\n` +
       `DELETE FROM \`${tableName}\` WHERE \`${idField}\` = ${entryRef};\n` +
       `INSERT INTO \`${tableName}\` (${columnList})\n` +
       `  SELECT ${selectList}\n` +
@@ -556,8 +554,7 @@ export class MysqlQueryService extends BaseQueryService {
     const entryRef = useVars ? '@ENTRY' : this.toSqlValue(newId);
 
     // Always include DELETE against the destination entry
-    let query =
-      `-- Copy ${tableName} entry from source to ${entryRef}\n` + `DELETE FROM \`${tableName}\` WHERE \`${idField}\` = ${entryRef};\n`;
+    let query = `DELETE FROM \`${tableName}\` WHERE \`${idField}\` = ${entryRef};\n`;
 
     if (!rows || rows.length === 0) {
       // Nothing to insert, return only the delete statement
