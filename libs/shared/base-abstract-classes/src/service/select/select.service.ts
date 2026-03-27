@@ -13,13 +13,39 @@ export abstract class SelectService<T extends TableRow> extends SearchService<T>
   protected override readonly selectFields: string[] | undefined = undefined;
   protected override readonly groupFields: string[] | undefined = undefined;
 
-  onSelect({ selected }: { selected: { [_key: string]: string | number }[] }) {
-    this.handlerService.select(
-      false,
-      `${selected[0][this.entityIdField]}`,
-      this.entityNameField ? `${selected[0][this.entityNameField]}` : this.entityTable,
-    );
+  protected resolveSelectField(row: { [key: string]: any }, field: string | undefined | null): string | number | undefined {
+    if (!field || !row) {
+      return undefined;
+    }
 
-    if ('Quality' in selected[0]) this.handlerService.itemQualityScssClass = selected[0]['Quality'] as number;
+    const normalizedId = row[field];
+    if (normalizedId !== undefined && normalizedId !== null) {
+      return normalizedId;
+    }
+
+    const upper = field.toUpperCase();
+    const lower = field.toLowerCase();
+
+    if (row[upper] !== undefined && row[upper] !== null) {
+      return row[upper];
+    }
+
+    if (row[lower] !== undefined && row[lower] !== null) {
+      return row[lower];
+    }
+
+    return undefined;
+  }
+
+  onSelect({ selected }: { selected: { [_key: string]: string | number }[] }) {
+    const row = selected[0] || {};
+    const id = this.resolveSelectField(row, this.entityIdField);
+    const name = this.resolveSelectField(row, this.entityNameField) ?? this.entityTable;
+
+    this.handlerService.select(false, id ?? '', `${name}`);
+
+    if ('Quality' in row) {
+      this.handlerService.itemQualityScssClass = row['Quality'] as number;
+    }
   }
 }

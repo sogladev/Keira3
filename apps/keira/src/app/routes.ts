@@ -20,6 +20,9 @@ import {
   CreatureTemplateSpellComponent,
   CreatureTextComponent,
   CreatureDefaultTrainerComponent,
+  CreatureImmunitiesComponent,
+  SelectCreatureImmunitiesComponent,
+  CreatureImmunitiesHandlerService,
   NpcVendorComponent,
   PickpocketingLootTemplateComponent,
   SaiCreatureComponent,
@@ -505,6 +508,20 @@ export const KEIRA_ROUTES: Routes = [
         path: 'tele',
         component: GameTeleComponent,
         canActivate: [GameTeleHandlerService],
+      },
+    ],
+  },
+  {
+    path: 'creature-immunities',
+    children: [
+      {
+        path: 'select',
+        component: SelectCreatureImmunitiesComponent,
+      },
+      {
+        path: 'creature-immunities',
+        component: CreatureImmunitiesComponent,
+        canActivate: [CreatureImmunitiesHandlerService],
       },
     ],
   },

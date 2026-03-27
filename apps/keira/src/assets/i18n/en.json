@@ -171,6 +171,11 @@
       "SEARCH_GAME_TELE": "Search Teleport",
       "SELECT_GAME_TELE": "Game Tele Editor"
     },
+    "CREATURE_IMMUNITIES": {
+      "TITLE": "Creature Immunities",
+      "SEARCH": "Search Creature Immunities",
+      "EDIT": "Creature Immunities"
+    },
     "TRAINER": {
       "TITLE": "Trainer",
       "SEARCH_TRAINER": "Search Trainer",
@@ -225,6 +230,7 @@
       "MIN_MAX_LEVEL": "The creature level will be in the range [minlevel, maxlevel]",
       "RANK": "If you want the creature to show a skull or “??” in the portrait (often with Bosses), you have to enable BOSS_MOB in type_flags",
       "REGEN_HEALTH": "Boolean (1 or 0) controlling whether the creature should regenerate its health or not.",
+      "CREATURE_IMMUNITIES_ID": "ID pointing to creature_immunities entry that controls which spell schools / mechanics this creature is immune to.",
       "RACIAL_LEADER": "Boolean (1 or 0) indicating whether the creature is a racial leader or not.",
       "PET_SPELL_DATA_ID": "ID, found in CreatureSpellData.dbc, that displays what spells the pet has in the client. If the value here is 0 and it's a summoned pet, then it uses spells from creature_template_spell. If you have set values in both then a value above 0 here will override template_spell",
       "KILL_CREDITS_DESC": "Can be a link to the first entry of the creature that could be killed to give quest credit",
@@ -893,6 +899,9 @@
   },
   "GAME_TELE": {
     "EDITOR": "Teleport Editor"
+  },
+  "CREATURE_IMMUNITIES": {
+    "TITLE": "Creature Immunities"
   },
   "TRAINER": {
     "EDITOR": "Trainer Editor",

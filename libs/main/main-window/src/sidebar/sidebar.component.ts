@@ -23,6 +23,7 @@ import {
   AcoreStringHandlerService,
 } from '@keira/features/texts';
 import { GameTeleHandlerService } from '@keira/features/game-tele';
+import { CreatureImmunitiesHandlerService } from '@keira/features/creature';
 import { TrainerHandlerService } from '@keira/features/trainer';
 import { LocationService } from '@keira/shared/common-services';
 import { MysqlService } from '@keira/shared/db-layer';
@@ -48,6 +49,7 @@ interface MenuStats {
   gossip: ToggleType;
   spell: ToggleType;
   gameTele: ToggleType;
+  creatureImmunities: ToggleType;
   trainer: ToggleType;
 }
 
@@ -86,6 +88,7 @@ export class SidebarComponent {
     gossip: 'up',
     spell: 'up',
     gameTele: 'up',
+    creatureImmunities: 'up',
     trainer: 'up',
   };
   private readonly IMAGES_COUNT = 7;
@@ -111,6 +114,7 @@ export class SidebarComponent {
   protected readonly npcTextHandlerService = inject(NpcTextHandlerService);
   protected readonly acoreStringHandlerService = inject(AcoreStringHandlerService);
   protected readonly gameTeleHandlerService = inject(GameTeleHandlerService);
+  protected readonly creatureImmunitiesHandlerService = inject(CreatureImmunitiesHandlerService);
   protected readonly trainerHandlerService = inject(TrainerHandlerService);
   private readonly locationService = inject(LocationService);
 
@@ -147,8 +151,8 @@ export class SidebarComponent {
     this.menuStates.gossip = 'up';
     this.menuStates.spell = 'up';
     this.menuStates.gameTele = 'up';
+    this.menuStates.creatureImmunities = 'up';
     this.menuStates.trainer = 'up';
-    this.menuStates.gameTele = 'up';
   }
 
   logout(): void {

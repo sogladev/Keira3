@@ -1,0 +1,131 @@
+<keira-top-bar [selected]="handlerService.selected" [selectedName]="handlerService.selectedName" [isNew]="handlerService.isNew" />
+
+<div class="container-fluid">
+  @if (editorService.loading) {
+    <span [translate]="'LOADING'"></span>
+  }
+
+  @if (editorService.form && !!editorService.loadedEntityId && !editorService.loading) {
+    <div>
+      <div class="content-block">
+        <keira-query-output
+          [docUrl]="docUrl"
+          [isNew]="editorService.isNew"
+          [diffQuery]="editorService.diffQuery"
+          [fullQuery]="editorService.fullQuery"
+          [error]="editorService.error"
+          [entityTable]="editorService.entityTable"
+          [editorService]="editorService"
+          (executeQuery)="save($event)"
+        />
+      </div>
+
+      <form [formGroup]="editorService.form" class="form-group edit-form">
+        <div class="content-block">
+          <div class="row">
+            <div class="col-12">
+              <span class="category-title" [translate]="'CREATURE_IMMUNITIES.TITLE'"></span>
+              <div class="row">
+                <div class="form-group col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                  <label class="control-label" for="ID">ID</label>
+                  <i
+                    class="fas fa-info-circle ms-1"
+                    placement="auto"
+                    [tooltip]="'UNIQUE_ID' | translate: { ENTITY: 'creature immunities' }"
+                  ></i>
+                  <input
+                    [formControlName]="'ID'"
+                    id="ID"
+                    type="number"
+                    class="form-control form-control-sm bg-light"
+                    readonly
+                    [disabled]="true"
+                  />
+                </div>
+
+                <div class="form-group col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                  <label class="control-label" for="SchoolMask">SchoolMask</label>
+                  <keira-flags-selector-btn
+                    [control]="editorService.form.controls.SchoolMask"
+                    [disabled]="editorService.form.controls.SchoolMask.disabled"
+                    [config]="{ flags: SPELL_SCHOOL_MASK, name: 'SchoolMask' }"
+                  />
+                  <input [formControlName]="'SchoolMask'" id="SchoolMask" type="number" class="form-control form-control-sm" />
+                </div>
+
+                <div class="form-group col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                  <label class="control-label" for="DispelTypeMask">DispelTypeMask</label>
+                  <keira-flags-selector-btn
+                    [control]="editorService.form.controls.DispelTypeMask"
+                    [disabled]="editorService.form.controls.DispelTypeMask.disabled"
+                    [config]="{ flags: DISPEL_TYPE_MASK, name: 'DispelTypeMask' }"
+                  />
+                  <input [formControlName]="'DispelTypeMask'" id="DispelTypeMask" type="number" class="form-control form-control-sm" />
+                </div>
+
+                <div class="form-group col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                  <label class="control-label" for="MechanicsMask">MechanicsMask</label>
+                  <keira-flags-selector-btn
+                    [control]="editorService.form.controls.MechanicsMask"
+                    [disabled]="editorService.form.controls.MechanicsMask.disabled"
+                    [config]="{ flags: MECHANIC_IMMUNE_MASK, name: 'MechanicsMask' }"
+                  />
+                  <input [formControlName]="'MechanicsMask'" id="MechanicsMask" type="number" class="form-control form-control-sm" />
+                </div>
+
+                <div class="form-group col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                  <label class="control-label" for="ImmuneAoE">ImmuneAoE</label>
+                  <keira-boolean-option-selector [control]="editorService.form.controls.ImmuneAoE" id="ImmuneAoE" />
+                </div>
+
+                <div class="form-group col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                  <label class="control-label" for="ImmuneChain">ImmuneChain</label>
+                  <keira-boolean-option-selector [control]="editorService.form.controls.ImmuneChain" id="ImmuneChain" />
+                </div>
+
+                <div class="form-group col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                  <label class="control-label" for="Effects">Effects</label>
+                  <div class="d-flex align-items-center">
+                    <input [formControlName]="'Effects'" id="Effects" class="form-control form-control-sm" />
+                    <keira-options-selector-btn
+                      [control]="editorService.form.controls.Effects"
+                      [disabled]="editorService.form.controls.Effects.disabled"
+                      [config]="{ options: SPELL_DBC_EFFECT, name: 'Effects' }"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                  <label class="control-label" for="Auras">Auras</label>
+                  <div class="d-flex align-items-center">
+                    <input [formControlName]="'Auras'" id="Auras" class="form-control form-control-sm" />
+                    <keira-options-selector-btn
+                      [control]="editorService.form.controls.Auras"
+                      [disabled]="editorService.form.controls.Auras.disabled"
+                      [config]="{ options: SPELL_DBC_APPLY_AURA_NAME, name: 'Auras' }"
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group col-12 col-sm-12 col-md-8 col-lg-6 col-xl-4">
+                  <label class="control-label" for="Comment">Comment</label>
+                  <div class="d-flex align-items-center">
+                    <input [formControlName]="'Comment'" id="Comment" class="form-control form-control-sm" />
+                    <button
+                      id="generate-comment-btn"
+                      type="button"
+                      class="btn btn-secondary btn-sm ms-2"
+                      (click)="editorService.generateComment()"
+                    >
+                      {{ 'SMARTAI.EDITOR.GENERATE_COMMENT' | translate }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  }
+</div>

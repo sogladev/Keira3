@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { ChangeDetectorRef, Injectable, inject } from '@angular/core';
 import { SelectService } from '@keira/shared/base-abstract-classes';
 import { MysqlQueryService } from '@keira/shared/db-layer';
 import {
@@ -23,5 +23,30 @@ export class SelectItemService extends SelectService<ItemTemplate> {
   constructor() {
     super();
     this.init();
+  }
+
+  override onSearch(changeDetectorRef: ChangeDetectorRef): void {
+    this.pageOffset = 0;
+
+    this.subscriptions.push(
+      this.queryService.query<ItemTemplate>(this.query).subscribe((data) => {
+        this.rows = (data as ItemTemplate[]).map((row) => this.normalizeRow(row));
+        changeDetectorRef.markForCheck();
+      }),
+    );
+  }
+
+  private normalizeRow(row: ItemTemplate): ItemTemplate {
+    const normalized = { ...row } as any;
+
+    if (normalized.entry === undefined || normalized.entry === null) {
+      if ((row as any).ID !== undefined && (row as any).ID !== null) {
+        normalized.entry = (row as any).ID;
+      } else if ((row as any).id !== undefined && (row as any).id !== null) {
+        normalized.entry = (row as any).id;
+      }
+    }
+
+    return normalized as ItemTemplate;
   }
 }

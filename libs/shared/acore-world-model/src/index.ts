@@ -17,6 +17,7 @@ export * from './entities/creature-template-movement.type';
 export * from './entities/creature-template-resistance.type';
 export * from './entities/creature-template-spell.type';
 export * from './entities/creature-template.type';
+export * from './entities/creature-immunities.type';
 export * from './entities/creature-text.type';
 export * from './entities/disenchant-loot-template.type';
 export * from './entities/faction.type';
@@ -93,6 +94,7 @@ export * from './flags/spell-dbc-effect-flags';
 export * from './flags/spell-dbc-flags-flags';
 export * from './flags/spell-dbc-item-flags';
 export * from './flags/spell-school-mask';
+export * from './flags/dispel-type-mask';
 export * from './flags/unit-flags';
 export * from './flags/unit-flags2';
 

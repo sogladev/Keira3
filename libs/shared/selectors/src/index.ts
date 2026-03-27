@@ -81,3 +81,6 @@ export * from './selectors/sound-entries-selector/sound-entries-selector-modal.c
 export * from './selectors/boolean-option-selector/boolean-option-selector.component';
 export * from './selectors/generic-option-selector/generic-option-selector.component';
 export * from './selectors/icon-selector/icon-selector.component';
+export * from './selectors/options-selector/options-selector-btn.component';
+export * from './selectors/options-selector/options-selector-modal.component';
+export * from './selectors/options-selector/options-selector.model';

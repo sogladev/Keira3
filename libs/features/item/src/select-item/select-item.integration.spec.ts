@@ -163,4 +163,23 @@ describe('SelectItem integration tests', () => {
     expect(navigateSpy).toHaveBeenCalledWith(['item/item-template']);
     page.expectTopBarEditing(results[1].entry as number, results[1].name as string);
   });
+
+  it('searching and selecting an item should work when row has id instead of entry', () => {
+    const { page, querySpy, navigateSpy } = setup();
+    const results: any[] = [{ id: 900, name: 'Item X', ItemType: 0, ItemLevel: 1, MinLevel: 10, ItemDescription: '' }];
+
+    querySpy.calls.reset();
+    querySpy.and.returnValue(of(results));
+
+    page.clickElement(page.searchBtn);
+
+    const row0 = page.getDatatableRowExternal(0);
+    expect(row0.innerText).toContain('Item X');
+
+    page.clickElement(page.getDatatableCellExternal(0, 1));
+
+    expect(navigateSpy).toHaveBeenCalledTimes(1);
+    expect(navigateSpy).toHaveBeenCalledWith(['item/item-template']);
+    page.expectTopBarEditing(900, 'Item X');
+  });
 });
