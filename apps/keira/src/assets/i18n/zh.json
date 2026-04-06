@@ -171,6 +171,11 @@
       "SEARCH_GAME_TELE": "搜索传送",
       "SELECT_GAME_TELE": "传送编辑器"
     },
+    "CREATURE_IMMUNITIES": {
+      "TITLE": "Creature Immunities",
+      "SEARCH": "Search Creature Immunities",
+      "EDIT": "Creature Immunities"
+    },
     "TRAINER": {
       "TITLE": "训练师",
       "SEARCH_TRAINER": "搜索训练师",
@@ -225,6 +230,7 @@
       "MIN_MAX_LEVEL": "生物等级将在[最低等级，最高等级]范围内刷新",
       "RANK": "如果你想让这个生物显示一个骷髅或“??”，你必须在type_flags中设置BOSS_MOB",
       "REGEN_HEALTH": "布尔值(1或0)，控制生物是否恢复生命值。",
+      "CREATURE_IMMUNITIES_ID": "ID pointing to creature_immunities entry that controls which spell schools / mechanics this creature is immune to.",
       "RACIAL_LEADER": "布尔值(1或0)表示这个生物是否是种族领袖。",
       "PET_SPELL_DATA_ID": "CreatureSpellData.dbc中的ID, 显示宠物在客户端中的技能。",
       "KILL_CREDITS_DESC": "可以关联生物entry，用于杀死生物后获得任务积分。",
@@ -891,6 +897,9 @@
   },
   "GAME_TELE": {
     "EDITOR": "传送编辑器"
+  },
+  "CREATURE_IMMUNITIES": {
+    "TITLE": "Creature Immunities"
   },
   "TRAINER": {
     "EDITOR": "训练师编辑器",

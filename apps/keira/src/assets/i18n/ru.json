@@ -171,6 +171,11 @@
       "SEARCH_GAME_TELE": "Поиск телепортации",
       "SELECT_GAME_TELE": "Редактор телепортации"
     },
+    "CREATURE_IMMUNITIES": {
+      "TITLE": "Creature Immunities",
+      "SEARCH": "Search Creature Immunities",
+      "EDIT": "Creature Immunities"
+    },
     "TRAINER": {
       "TITLE": "Тренер",
       "SEARCH_TRAINER": "Поиск тренера",
@@ -225,6 +230,7 @@
       "MIN_MAX_LEVEL": "Уровень существа будет находиться в диапазоне [minlevel, maxlevel]",
       "RANK": "Если вы хотите, чтобы существо показывало череп или “??” на портрете (часто бывает с боссами), вам нужно включить BOSS_MOB в type_flags",
       "REGEN_HEALTH": "Boolean (1 или 0), определяющий, должно ли существо восстанавливать свое здоровье или нет.",
+      "CREATURE_IMMUNITIES_ID": "ID pointing to creature_immunities entry that controls which spell schools / mechanics this creature is immune to.",
       "RACIAL_LEADER": "Boolean (1 или 0), указывающее, является ли существо расовым лидером или нет.",
       "PET_SPELL_DATA_ID": "ID, находящийся в CreatureSpellData.dbc, который показывает, какие заклинания есть у питомца в клиенте.",
       "KILL_CREDITS_DESC": "Может быть ссылка на первую запись о существе, которое можно убить, чтобы дать квестовую заслугу",
@@ -891,6 +897,9 @@
   },
   "GAME_TELE": {
     "EDITOR": "Редактор телепортации"
+  },
+  "CREATURE_IMMUNITIES": {
+    "TITLE": "Creature Immunities"
   },
   "TRAINER": {
     "EDITOR": "Редактор тренера",

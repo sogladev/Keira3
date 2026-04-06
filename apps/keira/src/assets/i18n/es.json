@@ -171,6 +171,11 @@
       "SEARCH_GAME_TELE": "Buscar Teletransporte",
       "SELECT_GAME_TELE": "Editor de Teletransporte"
     },
+    "CREATURE_IMMUNITIES": {
+      "TITLE": "Creature Immunities",
+      "SEARCH": "Search Creature Immunities",
+      "EDIT": "Creature Immunities"
+    },
     "TRAINER": {
       "TITLE": "Entrenador",
       "SEARCH_TRAINER": "Buscar Entrenador",
@@ -225,6 +230,7 @@
       "MIN_MAX_LEVEL": "El nivel de la criatura estará en el rango [MínNivel, MaxNivel]",
       "RANK": "Si deseas que la criatura muestre una calavera o el símbolo '??' en el mismo retrato (a menudo usado con Jefes), debe habilitar BOSS_MOB dentro de type_flags",
       "REGEN_HEALTH": "Booleano (1 o 0) el cual controla si la criatura debe regenerar su propia salud o no.",
+      "CREATURE_IMMUNITIES_ID": "ID pointing to creature_immunities entry that controls which spell schools / mechanics this creature is immune to.",
       "RACIAL_LEADER": "Booleano (1 o 0) que indica si la criatura es un líder racial o no.",
       "PET_SPELL_DATA_ID": "Identificador (ID) que se encuentra en CreatureSpellData.dbc, el cual muestra qué hechizos tiene la mascota dentro del cliente.",
       "KILL_CREDITS_DESC": "Puede ser un enlace a la primera Entrada de la criatura (ID), la cual podría ser asesinada para dar Créditos de Misión",
@@ -891,6 +897,9 @@
   },
   "GAME_TELE": {
     "EDITOR": "Editor de Teletransporte"
+  },
+  "CREATURE_IMMUNITIES": {
+    "TITLE": "Creature Immunities"
   },
   "TRAINER": {
     "EDITOR": "Editor de Entrenador",
